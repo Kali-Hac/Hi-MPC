@@ -94,55 +94,31 @@ Datasets
 
 ## Model Usage
 
-To (1) train the unsupervised SimMC to obtain skeleton representations and (2) validate their effectiveness on the person re-ID task on a specific dataset (probe), please simply run the following command:  
+To (1) train the unsupervised Hi-MPC model to obtain skeleton representations (MSMR) and (2) validate their effectiveness on the person re-ID task on a specific dataset (probe), please simply run the following command:  
 
 ```bash
-python SimMC.py --dataset KS20 --probe probe
+python Hi-MPC.py --dataset KS20 --probe probe
 
 # Default options: --dataset KS20 --probe probe --length 6  --gpu 0
 # --dataset [IAS, KS20, BIWI, KGBD]
 # --probe ['probe' (the only probe for KS20 or KGBD), 'A' (for IAS-A probe), 'B' (for IAS-B probe), 'Walking' (for BIWI-Walking probe), 'Still' (for BIWI-Still probe)] 
 # --length [4, 6, 8, 10, 12] 
-# --(mask_x, lambda, t, H, lr, eps, min_samples, etc.) with default settings for each dataset
-# --mode [Train (for training), Eval (for testing)]
-# --gpu [0, 1, ...]
-
-```
-Please see ```SimMC.py``` for more details.
-
-To print evaluation results (Top-1, Top-5, Top-10 Accuracy, mAP) of the best model saved in default directory (```ReID_Models/(Dataset)/(Probe)```), run:
-
-```bash
-python SimMC.py --dataset KS20 --probe probe --mode Eval
-```
-
-## SimMC for Unsupervised Feature Fine-Tuning
-
-### Download Pre-trained Skeleton Representations
-We provide skeleton representations (f=6) extrated from pre-trained state-of-the-art models: [**SGELA (pwd: 8hx8)**](https://pan.baidu.com/s/1_LrPdO1nqegXoAPDAOpcPA), [**MG-SCR (pwd: ox49)**](https://pan.baidu.com/s/1ssHEi1P1N2NdCkJTcq3BlQ), and [**SM-SGE (pwd: hrwx)**](https://pan.baidu.com/s/1P7Jk-SEb3Ix2T9o_NrKTAg). Please download and unzip the files to the current directory.
-
-### Usage
-To exploit the SimMC framework to fine-tune above skeleton representations pre-trained by the **source** models (SGELA, MG-SCR, SM-SGE) for the person re-ID task, please simply run the following command:  
-```bash
-python SimMC-UF.py --dataset KS20 --probe probe --source SM-SGE
-
-# Default options: --dataset KS20 --probe probe --gpu 0
-# --source [SGELA, MG-SCR, SM-SGE]
-# --dataset [IAS, KS20, BIWI, KGBD]
-# --probe ['probe' (the only probe for KS20 or KGBD), 'A' (for IAS-A probe), 'B' (for IAS-B probe), 'Walking' (for BIWI-Walking probe), 'Still' (for BIWI-Still probe)]  
-# --(mask_x, lambda, t, H, lr, eps, min_samples, etc.) with default settings for each dataset
+# --(H, M, eps, min_samples, lr, etc.) with default settings for each dataset
 # --mode [Train (for training), Eval (for testing)]
 # --gpu [0, 1, ...]
 
 ```
 
-Please see ```SimMC-UF.py``` for more details.
+To print Rank-1 accuracy, Rank-5 accuracy, Rank-10 accuracy and mAP when applying different level representations (joint-level, component-level, limb-level, MSMR) of the best model saved in default directory (```ReID_Models/(Dataset)/(Probe)```), run:
 
+```bash
+python Hi-MPC.py --dataset KS20 --probe probe --mode Eval
+```
 
 ## Application to Model-Estimated Skeleton Data 
 
 ### Estimate 3D Skeletons from RGB-Based Scenes
-To apply our SimMC to person re-ID under the large-scale RGB scenes (CASIA B), we exploit pose estimation methods to extract 3D skeletons from RGB videos of CASIA B as follows:
+To apply our Hi-MPC to person re-ID under the large-scale RGB scenes (CASIA B), we exploit pose estimation methods to extract 3D skeletons from RGB videos of CASIA B as follows:
 - Step 1: Download [CASIA-B Dataset](http://www.cbsr.ia.ac.cn/english/Gait%20Databases.asp)
 - Step 2: Extract the 2D human body joints by using [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
 - Step 3: Estimate the 3D human body joints by using [3DHumanPose](https://github.com/flyawaychase/3DHumanPose)
@@ -152,21 +128,21 @@ We provide already pre-processed skeleton data of CASIA B for **single-condition
 Please download the pre-processed datasets into the directory ``Datasets/``. <br/>
 
 ### Usage
-To (1) train the SimMC to obtain skeleton representations and (2) validate their effectiveness on the person re-ID task on CASIA B under **single-condition** and **cross-condition** settings, please simply run the following command:
+To (1) train the Hi-MPC to obtain skeleton representations (MSMR) and (2) validate their effectiveness on the person re-ID task on CASIA B under **single-condition** and **cross-condition** settings, please simply run the following command:
 
 ```bash
-python SimMC.py --dataset CAISA_B --probe_type nm.nm --length 40
+python Hi-MPC.py --dataset CAISA_B --probe_type nm.nm --length 40
 
 # --length [40, 50, 60] 
 # --probe_type ['nm.nm' (for 'Nm' probe and 'Nm' gallery), 'cl.cl', 'bg.bg', 'cl.nm' (for 'Cl' probe and 'Nm' gallery), 'bg.nm']  
-# --(mask_x, lambda, t, H, lr, eps, min_samples, etc.) with default settings
+# --(H, M, eps, min_samples, lr, etc.) with default settings
 # --gpu [0, 1, ...]
 
 ```
 
-Please see ```SimMC.py``` for more details.
+Please see ```Hi-MPC.py``` for more details.
 
 
 ## License
 
-SimMC is released under the MIT License. Our models and codes must only be used for the purpose of research.
+Hi-MPC is released under the MIT License. Our models and codes must only be used for the purpose of research.
