@@ -7,7 +7,7 @@
 By Haocong Rao and Chunyan Miao.
 
 ## Introduction
-This is the official implementation of Hi-MPC approach presented by "Hierarchical Skeleton Meta-Prototype Contrastive Learning with Hard Skeleton Mining for Unsupervised Person Re-Identification". The codes are used to reproduce experimental results of the proposed approach and Multi-level Skeleton Meta-Representation (MSMR) in the [**paper**](.).
+This is the official implementation of Hi-MPC approach presented by "Hierarchical Skeleton Meta-Prototype Contrastive Learning with Hard Skeleton Mining for Unsupervised Person Re-Identification". The codes are used to reproduce experimental results of the proposed approach and Multi-level Skeleton Meta-Representation (MSMR) in the [**paper**](/.).
 
 
 ## Environment
