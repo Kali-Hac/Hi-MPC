@@ -34,7 +34,7 @@ patience = 250  # patience for early stopping
 
 k1, k2 = 20, 6  # parameters to compute feature distance matrix
 
-tf.app.flags.DEFINE_string('save_model', '0', "")  # save best model
+tf.app.flags.DEFINE_string('save_model', '1', "")  # save best model
 tf.app.flags.DEFINE_string('batch_size', '256', "")
 
 tf.app.flags.DEFINE_string('model_size', '0', "")  # output model size and computational complexity
@@ -130,7 +130,7 @@ nonlinearity = tf.nn.elu
 
 pre_dir = 'ReID_Models/'
 # Customize the [directory] to save models with different hyper-parameters
-change = '_Hi-MPC_Release'
+change = '_Hi-MPC_Formal'
 
 # [directory] = [pre_dir] + [dataset] + '/' + [probe] + [change] + '/' + 'best.ckpt'
 # e.g., ReID_Models/BIWI/Walking_Hi-MPC/best.ckpt
@@ -905,12 +905,12 @@ if FLAGS.mode == 'Train':
 							FLAGS.dataset, FLAGS.probe,
 							top_1_int, max_acc_2_int, top_5_int, top_5_max_int, top_10_int, top_10_max_int,
 							mAP_int, max_acc_1_int,))
-					print(
-						" %.4f-%.4f-%.4f-%.4f \n %.4f-%.4f-%.4f-%.4f \n %.4f-%.4f-%.4f-%.4f \n %.4f-%.4f-%.4f-%.4f" % (
-							max_acc_2, top_5_max, top_10_max, max_acc_1,
-							max_acc_2_P, top_5_max_P, top_10_max_P, max_acc_1_P, max_acc_2_B, top_5_max_B,
-							top_10_max_B, max_acc_1_B,
-							max_acc_2_int, top_5_max_int, top_10_max_int, max_acc_1_int))
+					# print(
+					# 	" %.4f-%.4f-%.4f-%.4f \n %.4f-%.4f-%.4f-%.4f \n %.4f-%.4f-%.4f-%.4f \n %.4f-%.4f-%.4f-%.4f" % (
+					# 		max_acc_2, top_5_max, top_10_max, max_acc_1,
+					# 		max_acc_2_P, top_5_max_P, top_10_max_P, max_acc_1_P, max_acc_2_B, top_5_max_B,
+					# 		top_10_max_B, max_acc_1_B,
+					# 		max_acc_2_int, top_5_max_int, top_10_max_int, max_acc_1_int))
 
 				if cur_patience == patience:
 					break
@@ -1021,25 +1021,10 @@ if FLAGS.mode == 'Train':
 
 					if tr_step % display == 0:
 						print(
-							'[%s] Batch num: %d | Cluser num: %d, %d, %d | Outlier: %d, %d, %d | MPC Loss: %.3f, %.3f, %.3f' %
-							(str(epoch), tr_step, num_cluster, num_cluster_P, num_cluster_B, outlier_num,
-							 outlier_num_P, outlier_num_B, loss_J_, loss_P_, loss_B_))
+							'[%s] Batch num: %d | Loss: %.3f | J/C/L Cluser num: %d, %d, %d  | J/C/L Loss: %.3f, %.3f, %.3f ' %
+							(str(epoch), tr_step, loss, num_cluster, num_cluster_P, num_cluster_B, loss_J_, loss_P_, loss_B_))
 					tr_step += 1
 
-			if FLAGS.save_flag == '1':
-				try:
-					os.mkdir(pre_dir + dataset + '/' + probe + change + '/')
-				except:
-					pass
-				np.save(pre_dir + dataset + '/' + probe + change + '/' + 'MI_2s.npy', MI_2s)
-				np.save(pre_dir + dataset + '/' + probe + change + '/' + 'AMI_2s.npy', AMI_2s)
-				np.save(pre_dir + dataset + '/' + probe + change + '/' + 'top_1s.npy', top_1s)
-				np.save(pre_dir + dataset + '/' + probe + change + '/' + 'top_5s.npy', top_5s)
-				np.save(pre_dir + dataset + '/' + probe + change + '/' + 'top_10s.npy', top_10s)
-				np.save(pre_dir + dataset + '/' + probe + change + '/' + 'mAPs.npy', mAPs)
-				np.save(pre_dir + dataset + '/' + probe + change + '/' + 'MPC_loss.npy', Hi_MPC_losses)
-				np.save(pre_dir + dataset + '/' + probe + change + '/' + 'mACT.npy', mACT)
-				np.save(pre_dir + dataset + '/' + probe + change + '/' + 'mRCL.npy', mRCL)
 			sess.close()
 
 elif FLAGS.mode == 'Eval':
@@ -1066,54 +1051,6 @@ elif FLAGS.mode == 'Eval':
 		sess.run(init_op)
 		loader.restore(sess, checkpt_file)
 		saver = tf.train.Saver()
-
-
-		def train_loader(X_train_J, X_train_P, X_train_B, y_train):
-
-			tr_step = 0
-			tr_size = X_train_J.shape[0]
-			train_labels_all = []
-			train_features_all = []
-			train_features_all_P = []
-			train_features_all_B = []
-
-			while tr_step * batch_size < tr_size:
-				if (tr_step + 1) * batch_size > tr_size:
-					break
-				X_input_J = X_train_J[tr_step * batch_size:(tr_step + 1) * batch_size]
-				X_input_P = X_train_P[tr_step * batch_size:(tr_step + 1) * batch_size]
-				X_input_B = X_train_B[tr_step * batch_size:(tr_step + 1) * batch_size]
-
-				X_input_J = X_input_J.reshape([-1, joint_num, 3])
-				X_input_P = X_input_P.reshape([-1, 10, 3])
-				X_input_B = X_input_B.reshape([-1, 5, 3])
-
-				labels = y_train[tr_step * batch_size:(tr_step + 1) * batch_size]
-
-				[all_features, all_features_P, all_features_B] = sess.run(
-					[seq_ftr, seq_ftr_P, seq_ftr_B, ],
-					feed_dict={
-						J_in: X_input_J,
-						P_in: X_input_P,
-						B_in: X_input_B,
-					})
-				train_features_all_P.extend(all_features_P.tolist())
-				train_features_all_B.extend(all_features_B.tolist())
-
-				train_features_all.extend(all_features.tolist())
-				train_labels_all.extend(labels.tolist())
-				tr_step += 1
-
-			train_features_all = np.array(train_features_all).astype(np.float32)
-			train_features_all = torch.from_numpy(train_features_all)
-
-			train_features_all_P = np.array(train_features_all_P).astype(np.float32)
-			train_features_all_P = torch.from_numpy(train_features_all_P)
-
-			train_features_all_B = np.array(train_features_all_B).astype(np.float32)
-			train_features_all_B = torch.from_numpy(train_features_all_B)
-
-			return train_features_all, train_features_all_P, train_features_all_B, train_labels_all
 
 
 		def gal_loader(X_train_J, X_train_P, X_train_B, y_train):
@@ -1386,18 +1323,18 @@ elif FLAGS.mode == 'Eval':
 		mAP_int, top_1_int, top_5_int, top_10_int, mAP, top_1, top_5, top_10, mAP_P, top_1_P, top_5_P, top_10_P, \
 		mAP_B, top_1_B, top_5_B, top_10_B, = evaluation()
 
-		print(
-			'[Evaluation - J-level] %s - %s | Top-1: %.4f | Top-5: %.4f | Top-10: %.4f | mAP: %.4f ' % (
-				FLAGS.dataset, FLAGS.probe,
-				top_1, top_5, top_10, mAP))
-		print(
-			'[Evaluation - C-level] %s - %s | Top-1: %.4f | Top-5: %.4f | Top-10: %.4f | mAP: %.4f ' % (
-				FLAGS.dataset, FLAGS.probe,
-				top_1_P, top_5_P, top_10_P, mAP_P,))
-		print(
-			'[Evaluation - L-level] %s - %s | Top-1: %.4f | Top-5: %.4f | Top-10: %.4f | mAP: %.4f ' % (
-				FLAGS.dataset, FLAGS.probe,
-				top_1_B, top_5_B, top_10_B, mAP_B,))
+		# print(
+		# 	'[Evaluation - J-level] %s - %s | Top-1: %.4f | Top-5: %.4f | Top-10: %.4f | mAP: %.4f ' % (
+		# 		FLAGS.dataset, FLAGS.probe,
+		# 		top_1, top_5, top_10, mAP))
+		# print(
+		# 	'[Evaluation - C-level] %s - %s | Top-1: %.4f | Top-5: %.4f | Top-10: %.4f | mAP: %.4f ' % (
+		# 		FLAGS.dataset, FLAGS.probe,
+		# 		top_1_P, top_5_P, top_10_P, mAP_P,))
+		# print(
+		# 	'[Evaluation - L-level] %s - %s | Top-1: %.4f | Top-5: %.4f | Top-10: %.4f | mAP: %.4f ' % (
+		# 		FLAGS.dataset, FLAGS.probe,
+		# 		top_1_B, top_5_B, top_10_B, mAP_B,))
 		print(
 			'[Evaluation - MSMR] %s - %s | Top-1: %.4f | Top-5: %.4f | Top-10: %.4f | mAP: %.4f ' % (
 				FLAGS.dataset, FLAGS.probe,
