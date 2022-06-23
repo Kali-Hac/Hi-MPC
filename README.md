@@ -145,4 +145,4 @@ Please see ```Hi-MPC.py``` for more details.
 
 ## License
 
-Hi-MPC is released under the MIT License. Our models and codes must only be used for egitimate research.
+Hi-MPC is released under the MIT License. Our models and codes must only be used for legitimate research.
