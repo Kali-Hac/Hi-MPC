@@ -177,6 +177,11 @@ def gen_train_data(dataset, split, time_step, nb_nodes, nhood, global_att, batch
 	X_test_J = X_test.reshape([-1, time_step, 3, nb_nodes])
 	X_test_J = np.transpose(X_test_J, [0, 1, 3, 2])
 
+	# Mapping KGBD skeleton data into identical format
+	if dataset == 'KGBD':
+		X_train_J = X_train_J[:, :, [11, 10, 1, 0, 2, 4, 6, 8, 3, 5, 7, 9, 12, 14, 16, 18, 13, 15, 17, 19], :]
+		X_test_J = X_test_J[:, :, [11, 10, 1, 0, 2, 4, 6, 8, 3, 5, 7, 9, 12, 14, 16, 18, 13, 15, 17, 19], :]
+
 	if graph or L3:
 		X_train_P = reduce2part(X_train_J, nb_nodes)
 		X_train_B = reduce2body(X_train_J, nb_nodes)
