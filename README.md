@@ -94,7 +94,7 @@ Datasets
 
 ## Model Usage
 
-To (1) train the unsupervised Hi-MPC model to obtain skeleton representations (MSMR) and (2) validate their effectiveness on the person re-ID task on a specific dataset (probe), please simply run the following command:  
+To (1) train the unsupervised Hi-MPC$^{h}$ model to obtain skeleton representations (MSMR) and (2) validate their effectiveness on the person re-ID task on a specific dataset (probe), please simply run the following command:  
 
 ```bash
 python Hi-MPC.py --dataset KS20 --probe probe
@@ -118,7 +118,7 @@ python Hi-MPC.py --dataset KS20 --probe probe --mode Eval
 ## Application to Model-Estimated Skeleton Data 
 
 ### Estimate 3D Skeletons from RGB-Based Scenes
-To apply our Hi-MPC to person re-ID under the large-scale RGB scenes (CASIA B), we exploit pose estimation methods to extract 3D skeletons from RGB videos of CASIA B as follows:
+To apply our Hi-MPC$^{h}$ to person re-ID under the large-scale RGB scenes (CASIA B), we exploit pose estimation methods to extract 3D skeletons from RGB videos of CASIA B as follows:
 - Step 1: Download [CASIA-B Dataset](http://www.cbsr.ia.ac.cn/english/Gait%20Databases.asp)
 - Step 2: Extract the 2D human body joints by using [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
 - Step 3: Estimate the 3D human body joints by using [3DHumanPose](https://github.com/flyawaychase/3DHumanPose)
@@ -128,7 +128,7 @@ We provide already pre-processed skeleton data of CASIA B for **single-condition
 Please download the pre-processed datasets into the directory ``Datasets/``. <br/>
 
 ### Usage
-To (1) train the Hi-MPC to obtain skeleton representations (MSMR) and (2) validate their effectiveness on the person re-ID task on CASIA B under **single-condition** and **cross-condition** settings, please simply run the following command:
+To (1) train the Hi-MPC$^{h}$ to obtain skeleton representations (MSMR) and (2) validate their effectiveness on the person re-ID task on CASIA B under **single-condition** and **cross-condition** settings, please simply run the following command:
 
 ```bash
 python Hi-MPC.py --dataset CAISA_B --probe_type nm.nm --length 40
