@@ -7,7 +7,7 @@
 By Haocong Rao and Chunyan Miao.
 
 ## Introduction
-This is the official implementation of Hi-MPC approach presented by "Hierarchical Skeleton Meta-Prototype Contrastive Learning with Hard Skeleton Mining for Unsupervised Person Re-Identification". The codes are used to reproduce experimental results of the proposed Multi-level Skeleton Meta-Representation (MSMR) in the paper.
+This is the official implementation of Hi-MPC$^{h}$ approach presented by "Hierarchical Skeleton Meta-Prototype Contrastive Learning with Hard Skeleton Mining for Unsupervised Person Re-Identification". The codes are used to reproduce experimental results of the proposed Multi-level Skeleton Meta-Representation (MSMR) in the paper.
 
 
 ## Environment
@@ -30,7 +30,7 @@ conda install sklearn
 ```
 
 ## Datasets and Models
-We provide three already pre-processed datasets (IAS-Lab, BIWI, KGBD) with various sequence lengths (**f=4/6/8/10/12**) [**here (pwd: 7je2)**](https://pan.baidu.com/s/1R7CEsyMJsEnZGFLqwvchBg) and the **pre-trained models** [**here (pwd: mo0p)**](https://pan.baidu.com/s/1TElXJDavs0XgyDZCL4jfVA). Since we report the average performance of our approach on all datasets, here the provided models may produce better results than the paper. <br/>
+We provide three already pre-processed datasets (IAS-Lab, BIWI, KGBD) with various sequence lengths (**f=4/6/8/10/12**) [**here (pwd: 7je2)**](https://pan.baidu.com/s/1R7CEsyMJsEnZGFLqwvchBg) and the **pre-trained models** [**here (pwd: xqho)**](https://pan.baidu.com/s/19sNRr3z71ufGPjQF9pvsMw). Since we report the average performance of our approach on all datasets, here the provided models may produce better results than the paper. <br/>
 
 Please download the pre-processed datasets and model files while unzipping them to ``Datasets/`` and ``ReID_Models/`` folders in the current directory. <br/>
 
