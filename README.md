@@ -7,7 +7,7 @@
 By Haocong Rao and Chunyan Miao.
 
 ## Introduction
-This is the official implementation of Hi-MPC$^{h}$ approach presented by "Hierarchical Skeleton Meta-Prototype Contrastive Learning with Hard Skeleton Mining for Unsupervised Person Re-Identification". The codes are used to reproduce experimental results of the proposed Multi-level Skeleton Meta-Representation (MSMR) in the paper.
+This is the official implementation of Hi-MPC model presented by "Hierarchical Skeleton Meta-Prototype Contrastive Learning with Hard Skeleton Mining for Unsupervised Person Re-Identification". The codes are used to reproduce experimental results of the proposed Multi-level Skeleton Meta-Representation (MSMR) in the paper.
 
 
 ## Environment
@@ -128,7 +128,7 @@ We provide already pre-processed skeleton data of CASIA B for **single-condition
 Please download the pre-processed datasets into the directory ``Datasets/``. <br/>
 
 ### Usage
-To (1) train the Hi-MPC to obtain skeleton representations (MSMR) and (2) validate their effectiveness on the person re-ID task on CASIA B under **single-condition** and **cross-condition** settings, please simply run the following command:
+To (1) train the Hi-MPC model to obtain skeleton representations (MSMR) and (2) validate their effectiveness on the person re-ID task on CASIA B under **single-condition** and **cross-condition** settings, please simply run the following command:
 
 ```bash
 python Hi-MPC.py --dataset CAISA_B --probe_type nm.nm --length 40
