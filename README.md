@@ -4,7 +4,7 @@
 ![Faiss-gpu >= 1.6.3](https://img.shields.io/badge/Faiss->=1.6.3-orange.svg)
 
 # Hierarchical Skeleton Meta-Prototype Contrastive Learning with Hard Skeleton Mining for Unsupervised Person Re-Identification
-By Haocong Rao, Cyril Leung, and Chunyan Miao. Accepted by *International Journal of Computer Vision (IJCV)* ([**Arxiv**](https://arxiv.org/abs/2303.06819](https://arxiv.org/abs/2307.12917)).
+By Haocong Rao, Cyril Leung, and Chunyan Miao. Accepted by *International Journal of Computer Vision (IJCV)* ([**Arxiv**](https://arxiv.org/abs/2303.06819)).
 
 ## Introduction
 This is the official implementation of Hi-MPC model presented by "Hierarchical Skeleton Meta-Prototype Contrastive Learning with Hard Skeleton Mining for Unsupervised Person Re-Identification". The codes are used to reproduce experimental results of the proposed Multi-level Skeleton Meta-Representation (MSMR) in the paper.
