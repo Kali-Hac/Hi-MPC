@@ -144,6 +144,16 @@ python Hi-MPC.py --dataset CASIA_B --probe_type nm.nm --length 40
 
 Please see ```Hi-MPC.py``` for more details.
 
+## Citation
+If you found this repository useful, please consider citing:
+```bash
+@article{rao2023hierarchical,
+  title={Hierarchical Skeleton Meta-Prototype Contrastive Learning with Hard Skeleton Mining for Unsupervised Person Re-Identification},
+  author={Rao, Haocong and Leung, Cyril and Miao, Chunyan},
+  journal={arXiv preprint arXiv:2307.12917},
+  year={2023}
+}
+```
 
 ## License
 
